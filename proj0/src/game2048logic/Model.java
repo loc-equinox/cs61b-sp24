@@ -84,7 +84,7 @@ public class Model {
      *  Empty spaces are stored as null.
      * */
     public boolean emptySpaceExists() {
-        int size = board.size();
+        int size = this.size();
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 if (board.tile(i, j) == null)
@@ -98,7 +98,14 @@ public class Model {
      * given a Tile object t, we get its value with t.value().
      */
     public boolean maxTileExists() {
-        // TODO: Task 3. Fill in this function.
+        int size = this.size();
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++) {
+                Tile cur = board.tile(i, j);
+                if (cur != null)
+                    if (cur.value() == MAX_PIECE)
+                        return true;
+            }
         return false;
     }
 
@@ -109,7 +116,27 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
-        // TODO: Fill in this function.
+        if (emptySpaceExists())
+            return true;
+
+        int size = this.size();
+        /*
+          Check for horizontal pairs.
+          Note that there aren't any empty spaces anymore,
+          so there's no need to check whether a tile is null.
+         */
+        for (int i = 0; i <= size - 2; i++)
+            for (int j = 0; j <= size - 1; j++)
+                if (board.tile(i, j).value() == board.tile(i + 1, j).value())
+                    return true;
+
+        /*
+          Check for vertical pairs.
+         */
+        for (int i = 0; i <= size - 1; i++)
+            for (int j = 0; j <= size - 2; j++)
+                if (board.tile(i, j).value() == board.tile(i, j + 1).value())
+                    return true;
         return false;
     }
 
