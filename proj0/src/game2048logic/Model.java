@@ -158,7 +158,21 @@ public class Model {
         Tile currTile = board.tile(x, y);
         int myValue = currTile.value();
         int targetY = y;
+        int size = this.size();
 
+        // move up until it hits the edge or another tile
+        if (targetY < size - 1)
+            while (targetY < size - 1 && board.tile(x, targetY + 1) == null)
+                targetY++;
+
+        // if it hits another tile, decide whether to merge into it
+        if (targetY < size - 1) {
+            Tile adjTile = board.tile(x, targetY + 1);
+            if (adjTile.value() == myValue && adjTile.wasMerged() == false)
+                targetY++;
+        }
+
+        board.move(x, targetY, currTile);
         // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
 
