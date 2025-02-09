@@ -168,8 +168,10 @@ public class Model {
         // if it hits another tile, decide whether to merge into it
         if (targetY < size - 1) {
             Tile adjTile = board.tile(x, targetY + 1);
-            if (adjTile.value() == myValue && !adjTile.wasMerged())
+            if (adjTile.value() == myValue && !adjTile.wasMerged()) {
+                score += myValue * 2;
                 targetY++;
+            }
         }
 
         if (targetY != y) // avoid doing in-place moves
